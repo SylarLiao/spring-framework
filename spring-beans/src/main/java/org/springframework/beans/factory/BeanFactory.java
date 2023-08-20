@@ -113,6 +113,14 @@ import org.springframework.lang.Nullable;
  * @see org.springframework.beans.factory.config.BeanPostProcessor#postProcessAfterInitialization
  * @see DisposableBean#destroy
  * @see org.springframework.beans.factory.support.RootBeanDefinition#getDestroyMethodName
+ * Spring最底层的接口，包含了各种bean的定义，读取bean配置文档，管理bean的加载，实例化，控制bean的生命周期，
+ * 维护bean之间的关系
+ * 延迟加载的方式注入bean
+ * 手动注册BeanFactoryPostProcessor、BeanPostProcessor
+ * 第一次使用时初始化bean
+ *
+ * 定义获取bean和bean的各种属性
+ *
  */
 public interface BeanFactory {
 

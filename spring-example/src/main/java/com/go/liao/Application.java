@@ -1,11 +1,12 @@
 package com.go.liao;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Application {
 	public static void main(String[] args) {
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-		context.refresh();
-		System.out.println("hello");
+		ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
+		User user = (User) context.getBean("user");
+		System.out.println(user);
 	}
 }

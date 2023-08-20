@@ -22,7 +22,7 @@ import org.springframework.context.ApplicationContext;
  * Event raised when an {@code ApplicationContext} gets initialized or refreshed.
  *
  * @author Juergen Hoeller
- * @since 04.03.2003
+ * @since 04.03.2003¡
  * @see ContextClosedEvent
  */
 @SuppressWarnings("serial")

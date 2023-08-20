@@ -42,6 +42,7 @@ import org.springframework.lang.Nullable;
  * @see org.springframework.transaction.support.TransactionTemplate
  * @see org.springframework.transaction.interceptor.TransactionInterceptor
  * @see org.springframework.transaction.ReactiveTransactionManager
+ * 平台事务管理器，主要用于平台相关事务的管理，有多个实现类，对应不同的db
  */
 public interface PlatformTransactionManager extends TransactionManager {
 
@@ -67,6 +68,7 @@ public interface PlatformTransactionManager extends TransactionManager {
 	 * @see TransactionDefinition#getIsolationLevel
 	 * @see TransactionDefinition#getTimeout
 	 * @see TransactionDefinition#isReadOnly
+	 * 获取事务状态
 	 */
 	TransactionStatus getTransaction(@Nullable TransactionDefinition definition)
 			throws TransactionException;
@@ -97,6 +99,7 @@ public interface PlatformTransactionManager extends TransactionManager {
 	 * @throws IllegalTransactionStateException if the given transaction
 	 * is already completed (that is, committed or rolled back)
 	 * @see TransactionStatus#setRollbackOnly
+	 * 事务提交
 	 */
 	void commit(TransactionStatus status) throws TransactionException;
 
@@ -115,6 +118,7 @@ public interface PlatformTransactionManager extends TransactionManager {
 	 * (typically caused by fundamental resource failures)
 	 * @throws IllegalTransactionStateException if the given transaction
 	 * is already completed (that is, committed or rolled back)
+	 * 事务回滚
 	 */
 	void rollback(TransactionStatus status) throws TransactionException;
 

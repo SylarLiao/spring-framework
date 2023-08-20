@@ -40,6 +40,7 @@ import org.springframework.lang.Nullable;
  * @see PlatformTransactionManager#getTransaction(TransactionDefinition)
  * @see org.springframework.transaction.support.DefaultTransactionDefinition
  * @see org.springframework.transaction.interceptor.TransactionAttribute
+ * 事务定义信息
  */
 public interface TransactionDefinition {
 
@@ -48,6 +49,7 @@ public interface TransactionDefinition {
 	 * Analogous to the EJB transaction attribute of the same name.
 	 * <p>This is typically the default setting of a transaction definition,
 	 * and typically defines a transaction synchronization scope.
+	 * 如果当前没有事务，就创建一个新的事务，如果当前存在事务，就加入该事务，是最常用的设置。
 	 */
 	int PROPAGATION_REQUIRED = 0;
 
@@ -69,6 +71,7 @@ public interface TransactionDefinition {
 	 * "synchronization on actual transaction").
 	 * @see org.springframework.transaction.support.AbstractPlatformTransactionManager#setTransactionSynchronization
 	 * @see org.springframework.transaction.support.AbstractPlatformTransactionManager#SYNCHRONIZATION_ON_ACTUAL_TRANSACTION
+	 * 支持当前事务，如果当前存在事务，就加入该事务，如果不存在，就以非事务方式执行。
 	 */
 	int PROPAGATION_SUPPORTS = 1;
 
@@ -77,6 +80,7 @@ public interface TransactionDefinition {
 	 * exists. Analogous to the EJB transaction attribute of the same name.
 	 * <p>Note that transaction synchronization within a {@code PROPAGATION_MANDATORY}
 	 * scope will always be driven by the surrounding transaction.
+	 * 支持当前事务，如果存在事务，就加入，如果不存在，就报Exception
 	 */
 	int PROPAGATION_MANDATORY = 2;
 
@@ -92,6 +96,7 @@ public interface TransactionDefinition {
 	 * transaction synchronizations. Existing synchronizations will be suspended
 	 * and resumed appropriately.
 	 * @see org.springframework.transaction.jta.JtaTransactionManager#setTransactionManager
+	 * 无论当前存不存在事务，都新建事务
 	 */
 	int PROPAGATION_REQUIRES_NEW = 3;
 
@@ -107,6 +112,7 @@ public interface TransactionDefinition {
 	 * {@code PROPAGATION_NOT_SUPPORTED} scope. Existing synchronizations
 	 * will be suspended and resumed appropriately.
 	 * @see org.springframework.transaction.jta.JtaTransactionManager#setTransactionManager
+	 * 以非事务方式执行，如果存在事务，就挂起事务
 	 */
 	int PROPAGATION_NOT_SUPPORTED = 4;
 
@@ -115,6 +121,7 @@ public interface TransactionDefinition {
 	 * exists. Analogous to the EJB transaction attribute of the same name.
 	 * <p>Note that transaction synchronization is <i>not</i> available within a
 	 * {@code PROPAGATION_NEVER} scope.
+	 * 以非事务方式执行，如果存在事务，就报错
 	 */
 	int PROPAGATION_NEVER = 5;
 
@@ -128,6 +135,7 @@ public interface TransactionDefinition {
 	 * when working on a JDBC 3.0 driver. Some JTA providers might support
 	 * nested transactions as well.
 	 * @see org.springframework.jdbc.datasource.DataSourceTransactionManager
+	 * 如果当前存在事务，就以嵌套的方式执行，如果不存在，就以REQUIRED执行
 	 */
 	int PROPAGATION_NESTED = 6;
 
@@ -136,6 +144,7 @@ public interface TransactionDefinition {
 	 * Use the default isolation level of the underlying datastore.
 	 * All other levels correspond to the JDBC isolation levels.
 	 * @see java.sql.Connection
+	 * 使用数据库默认的隔离级别
 	 */
 	int ISOLATION_DEFAULT = -1;
 
@@ -147,6 +156,7 @@ public interface TransactionDefinition {
 	 * If any of the changes are rolled back, the second transaction will have
 	 * retrieved an invalid row.
 	 * @see java.sql.Connection#TRANSACTION_READ_UNCOMMITTED
+	 * 读未提交，允许另一个事务读取该事务未提交的数据
 	 */
 	int ISOLATION_READ_UNCOMMITTED = 1;  // same as java.sql.Connection.TRANSACTION_READ_UNCOMMITTED;
 
@@ -156,6 +166,7 @@ public interface TransactionDefinition {
 	 * <p>This level only prohibits a transaction from reading a row
 	 * with uncommitted changes in it.
 	 * @see java.sql.Connection#TRANSACTION_READ_COMMITTED
+	 * 读已提交，保证一个事务修改的数据提交后才能被另一个事务读取，而且能看到该事务对已有数据的更新
 	 */
 	int ISOLATION_READ_COMMITTED = 2;  // same as java.sql.Connection.TRANSACTION_READ_COMMITTED;
 
@@ -167,6 +178,7 @@ public interface TransactionDefinition {
 	 * a second transaction alters the row, and the first transaction re-reads the row,
 	 * getting different values the second time (a "non-repeatable read").
 	 * @see java.sql.Connection#TRANSACTION_REPEATABLE_READ
+	 * 可重复读，保证一个事务修改的数据提交后才能被另一个事务读取，而且不能看到该事务对已有数据的更新
 	 */
 	int ISOLATION_REPEATABLE_READ = 4;  // same as java.sql.Connection.TRANSACTION_REPEATABLE_READ;
 
@@ -180,6 +192,7 @@ public interface TransactionDefinition {
 	 * re-reads for the same condition, retrieving the additional "phantom" row
 	 * in the second read.
 	 * @see java.sql.Connection#TRANSACTION_SERIALIZABLE
+	 * 串行化，一个事务无法看到其他事务对数据的更新
 	 */
 	int ISOLATION_SERIALIZABLE = 8;  // same as java.sql.Connection.TRANSACTION_SERIALIZABLE;
 

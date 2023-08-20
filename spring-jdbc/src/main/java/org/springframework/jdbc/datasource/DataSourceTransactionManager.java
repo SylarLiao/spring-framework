@@ -108,6 +108,7 @@ import org.springframework.util.Assert;
  * @see TransactionAwareDataSourceProxy
  * @see LazyConnectionDataSourceProxy
  * @see org.springframework.jdbc.core.JdbcTemplate
+ * 如果使用指定数据源的方式，比如操作数据库用的是：jdbcTemplate、mybatis、iBatis等，那么可以使用这个事务管理器
  */
 @SuppressWarnings("serial")
 public class DataSourceTransactionManager extends AbstractPlatformTransactionManager
@@ -182,6 +183,7 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 	 * @return the DataSource (never {@code null})
 	 * @throws IllegalStateException in case of no DataSource set
 	 * @since 5.0
+	 * 返回事务管理器中的datasource对象
 	 */
 	protected DataSource obtainDataSource() {
 		DataSource dataSource = getDataSource();
@@ -236,10 +238,14 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 
 	@Override
 	protected Object doGetTransaction() {
+		// 创建数据源事务对象
 		DataSourceTransactionObject txObject = new DataSourceTransactionObject();
+		// 是否支持内部事务
 		txObject.setSavepointAllowed(isNestedTransactionAllowed());
+		// ConnectionHolder表示jdbc连接持有者
 		ConnectionHolder conHolder =
 				(ConnectionHolder) TransactionSynchronizationManager.getResource(obtainDataSource());
+		// 保存到事务对象中
 		txObject.setConnectionHolder(conHolder, false);
 		return txObject;
 	}

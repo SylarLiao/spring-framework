@@ -116,6 +116,7 @@ import org.springframework.util.StringUtils;
  * @see #setTransactionManagerName
  * @see #setTransactionManager
  * @see WebLogicJtaTransactionManager
+ * 如果使用java的jta来操作db，这种通常是分布式事务，可以用这个
  */
 @SuppressWarnings("serial")
 public class JtaTransactionManager extends AbstractPlatformTransactionManager

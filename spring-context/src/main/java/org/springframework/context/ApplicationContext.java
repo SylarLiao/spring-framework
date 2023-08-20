@@ -54,6 +54,19 @@ import org.springframework.lang.Nullable;
  * @see ConfigurableApplicationContext
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.core.io.ResourceLoader
+ * 继承自BeanFactory
+ * 提供了beanfactory没有的功能：
+ * 1、继承了MessageSource，支持国际化
+ * 2、统一的资源文件访问方式
+ * 3、提供在监听器中注册bean的事件
+ * 4、同时加载多个配置文档
+ * 5、载入多个上下文，使得每个上下文都专注于特定的层次
+ *
+ * 在容器启动时创建所有的bean
+ * 自动注册BeanFactoryPostProcessor、BeanPostProcessor
+ * scope是singleton、lazy_init是false，ApplicationContext启动时加载bean
+ * scope是singleton、lazy_init是true，则在第一次使用时加载
+ * scope是prototype，第一次使用时加载
  */
 public interface ApplicationContext extends EnvironmentCapable, ListableBeanFactory, HierarchicalBeanFactory,
 		MessageSource, ApplicationEventPublisher, ResourcePatternResolver {

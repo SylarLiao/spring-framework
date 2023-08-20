@@ -110,6 +110,7 @@ import org.springframework.util.CollectionUtils;
  * @see org.springframework.jdbc.core.JdbcTemplate
  * @see org.springframework.jdbc.datasource.DataSourceTransactionManager
  * @see org.springframework.transaction.jta.JtaTransactionManager
+ * 如果你使用jpd来操作db，那么可以使用这个事务管理器
  */
 @SuppressWarnings("serial")
 public class JpaTransactionManager extends AbstractPlatformTransactionManager
